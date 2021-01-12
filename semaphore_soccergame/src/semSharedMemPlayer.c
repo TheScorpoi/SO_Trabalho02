@@ -194,7 +194,7 @@ static int playerConstituteTeam (int id)
 /**
  *  \brief player waits for referee to start match
  *
- *  The player updates its state and waits for referee to end match.  
+ *  The player updates its state and waits for referee to start match.  
  *  The internal state should be saved.
  *
  *  \param id   player id

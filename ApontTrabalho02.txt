@@ -1,0 +1,74 @@
+--------------------------------------------------------------------
+------------------- Apontamentos Trabalho 02 -----------------------
+--------------------------------------------------------------------
+
+QUESTOES VALORIZADAS NAS AVALIAÇÃO
+sempre que se usar um semUp ou um semDown, confirmar se deu -1, tratar os erros (perros blablabla)
+Usar mais as macros, do que por diretamente os numeros com que as variáveis vao ficar
+ex, em vez de dizer que o referee fica com o valor 2, metemos STARTING_GAME ....
+
+run.sh serve para nos vermos se estamos a ter deadlock, podemos fazer ./run.sh corre 1000, 
+ou ./run.sh 100 e corre 100 vezes
+
+Jogo de futebol de 5 - 4 jogadores de campo e 1 guarda-redes
+
+Arbitro - 1
+Jogadores - 10 (temos 2 a mais)
+GR - 3 (temos 1 a mais)
+
+Jogadores e GR sao processo independentes, que se sincronizam atraves
+de semaforos e memoria partilhada.
+
+Stor disse que é boa ideia começar pelo arbitro, pq é mais facil
+Cada entidade so pode alterar o seu proprio estado (Referee para referee, playStat do jogador 1
+so altera coisas dele mesmo)
+
+Para correr, dentro do src --> make all_bin
+
+Para ter a definição dos numeros, o ficheiro probConst.h tem la isso
+
+Quando ficam disponivel para formar uma equipa pode acontecer 3 coisas:
+
+-Enq nao houver numero de elementos completo, ele fica waiting_team
+- se so faltar ele para formar equipa, ele tem de acordar os outros 3 Jogadores
+e o GR, e espera que o jogadores que acorda lhe digam a q equipa pertencem e fica em forming_team
+em forming_team so fica o utlimo que chegou para formar equipa
+- Depois de formar equipa ou vao para waiting_start1 ou 2
+
+QUANDO UM JOGADOR FORMA A PRIMEIRA EQUIPA INFORMA O ARBITRO, E QUANDO FORMA
+A SEGUNDA EQUIPA INFORMA O ARBITRO, OU SEJA, O ARBITRO TEM DE RECEBER 2 NOTIFICAÇOES
+NOTA IMPORTANTE, o ultimo jogador a formar a equipa tanto pode ser um jogador como um GR
+logo isto tera de ser implementado quer no jogador que no GR
+
+Quanto ao arbitro:
+-Vai chegar
+-Vai esperar que as 2 equipas se forming_team
+-inicia o Jogo
+-arbitra
+-e termina o jogo
+
+SO para correr o nosso referre, faz-se make rf, e aquilo usa o nosso referre, e usa o goalie e o jog ja compilado
+
+Qd se corre, e dps para uma segunda vez, nao der para correr (pq estamos a criar o array de semaforos em modo exclusivo),
+então o que se faz é o: ./clean.sh --> no clean temos de alterar o valor 0x????, é so correr
+aquilo uma vez, e fazer ipcs e por la o valor depois
+
+SO para correr os nossos jogadores, faz-se make pl, chegam os gr, e o referre, mas o arbitro
+nao começa o jogo pq, nao ha equipas formadas
+
+So para correr os goalies, faz-se make gl ?? (n apanhei), mas a logica é a mesma
+
+PRIMEIRAMENTE- fazer a tabela sobre cada um dos semaforso do shareDataSync.h
+entidade q tem de esperar (bloquear) num semaforo faz um down
+as entendades q desbloqueiam vao fazer up
+
+      SEMAFORO     |  ENTIDADE DOWN | FUNCAO DOWN  | #DOWNS |  ENTIDADE UP  |  FUNCAO UP  |  #UPS 
+
+playersWaitTeam    | WAITING_TEAM   |playCosntTeam |   4    | WAITING_TEAM  |playCosntTeam|   4       
+goaliesWaitTeam    |  WAITING_TEAM  |goalConstTeam |   1    | WAITING_TEAM  |goalConstTeam|   1       
+playersWaitReferee | WAITING_START? |              |   10   |               |             |   10        
+playersWaitEnd     |                |              |   1    |               |             |   1      
+refereeWaitTeams   |  waitForTeams  |              |   2    |               |             |   2    
+playersRegistered  |  PLAYING_1 E 2 |              |   5    |               |             |   5      
+
+

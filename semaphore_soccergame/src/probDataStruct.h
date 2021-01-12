@@ -47,6 +47,7 @@ typedef struct
     /** \brief total number of referees */
     int nReferees;
 
+    //! Estas 4 variáveis terao de ser geridas por nos, e estao em share memory
     /** \brief number of players that already arrived */
     int playersArrived;
     /** \brief number of goalies that already arrived */
@@ -56,6 +57,7 @@ typedef struct
     /** \brief number of goalies that arrived and are free (no team) */
     int goaliesFree;
 
+    //! Quando a equipa 1 for formada, o teamID terá de passar para 2, temos de ser nos a fazer isso
     /** \brief id of team that will be formed next - initial value=1 */
     int teamId;
 
