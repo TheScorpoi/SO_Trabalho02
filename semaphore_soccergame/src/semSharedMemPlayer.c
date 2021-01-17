@@ -145,7 +145,9 @@ static void arrive(int id)
     }
 
     /* TODO: insert your code here */
-    
+    sh->fSt.st.playerStat[id] = ARRIVING;
+    saveState(nFic, &sh->fSt);
+
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
         perror ("error on the down operation for semaphore access (PL)");
         exit (EXIT_FAILURE);
@@ -180,13 +182,49 @@ static int playerConstituteTeam (int id)
 
 
     /* TODO: insert your code here */
-    
+    sh->fSt.playersFree++;
+    sh->fSt.playersArrived++;
+
+    /* TODO: insert your code here */
+    if (sh->fSt.playersArrived <= 8)
+    {
+        if (sh->fSt.playersFree >= 4 && sh->fSt.goaliesFree >= 1)
+        {
+
+            sh->fSt.st.playerStat[id] = FORMING_TEAM;
+            sh->fSt.playersFree = sh->fSt.playersFree - 4; 
+            sh->fSt.goaliesFree--;
+            saveState(nFic, &sh->fSt);
+        }
+        else
+        {
+            sh->fSt.st.playerStat[id] = WAITING_TEAM;
+            saveState(nFic, &sh->fSt);
+        }
+        
+    }
+    else
+    {
+        sh->fSt.st.goalieStat[id] = LATE;
+        saveState(nFic, &sh->fSt);
+    }
+
+
     if (semUp (semgid, sh->mutex) == -1) {                                                         /* exit critical region */
         perror ("error on the down operation for semaphore access (PL)");
         exit (EXIT_FAILURE);
     }
 
     /* TODO: insert your code here */
+    for (int i = 0; i < NUMPLAYERS; i++)
+    {
+        if (semUp(semgid, sh->playersWaitTeam) == -1)
+        {
+            perror("error on the down operation for semaphore access (GL)");
+            exit(EXIT_FAILURE);
+        }
+    }
+
 
     return ret;
 }
