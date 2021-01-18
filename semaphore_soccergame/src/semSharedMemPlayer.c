@@ -260,7 +260,7 @@ static int playerConstituteTeam(int id)
     {
         if (semUp(semgid, sh->refereeWaitTeams) == -1)
         {
-            perror("error on the up operation for semaphore access (PL)");
+            perror("error on the down operation for semaphore access (PL)");
             exit(EXIT_FAILURE);
         }
     }
@@ -277,7 +277,7 @@ static int playerConstituteTeam(int id)
 
         if (semUp(semgid, sh->playerRegistered) == -1)
         {
-            perror("error on the up operation for semaphore access (PL)");
+            perror("error on the down operation for semaphore access (PL)");
             exit(EXIT_FAILURE);
         }
     }
