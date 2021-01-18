@@ -155,7 +155,7 @@ static void arrive()
 
     if (semUp(semgid, sh->mutex) == -1)
     { /* leave critical region */
-        perror("error on the up operation for semaphore access (RF)");
+        perror("error on the down operation for semaphore access (RF)");
         exit(EXIT_FAILURE);
     }
 
@@ -183,7 +183,7 @@ static void waitForTeams()
 
     if (semUp(semgid, sh->mutex) == -1)
     { /* leave critical region */
-        perror("error on the up operation for semaphore access (RF)");
+        perror("error on the down operation for semaphore access (RF)");
         exit(EXIT_FAILURE);
     }
 
@@ -195,7 +195,7 @@ static void waitForTeams()
     {
         if (semDown(semgid, sh->refereeWaitTeams) == -1)
         {
-            perror("error on the down operation for semaphore access (AG)");
+            perror("error on the up operation for semaphore access ()");
             exit(EXIT_FAILURE);
         }
     }
@@ -222,7 +222,7 @@ static void startGame()
 
     if (semUp(semgid, sh->mutex) == -1)
     { /* leave critical region */
-        perror("error on the up operation for semaphore access (RF)");
+        perror("error on the down operation for semaphore access (RF)");
         exit(EXIT_FAILURE);
     }
 
@@ -231,7 +231,7 @@ static void startGame()
     {
         if (semUp(semgid, sh->playersWaitReferee) == -1)
         { /* leave critical region */
-            perror("error on the up operation for semaphore access (RF)");
+            perror("error on the down operation for semaphore access (RF)");
             exit(EXIT_FAILURE);
         }
     }
@@ -258,7 +258,7 @@ static void play()
 
     if (semUp(semgid, sh->mutex) == -1)
     { /* leave critical region */
-        perror("error on the up operation for semaphore access (RF)");
+        perror("error on the down operation for semaphore access (RF)");
         exit(EXIT_FAILURE);
     }
 
@@ -286,7 +286,7 @@ static void endGame()
 
     if (semUp(semgid, sh->mutex) == -1)
     { /* leave critical region */
-        perror("error on the up operation for semaphore access (RF)");
+        perror("error on the down operation for semaphore access (RF)");
         exit(EXIT_FAILURE);
     }
 
@@ -295,7 +295,7 @@ static void endGame()
     {
         if (semUp(semgid, sh->playersWaitEnd) == -1)
         {
-            perror("error on the up operation for semaphore access (RF)");
+            perror("error on the down operation for semaphore access (RF)");
             exit(EXIT_FAILURE);
         }
     }
