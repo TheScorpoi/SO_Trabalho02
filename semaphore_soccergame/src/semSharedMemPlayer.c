@@ -179,6 +179,7 @@ static void arrive(int id)
  *  \return id of player team (0 for late goalies; 1 for team 1; 2 for team 2)
  *
  */
+
 static int playerConstituteTeam(int id)
 {
     int ret = 0;
@@ -190,61 +191,61 @@ static int playerConstituteTeam(int id)
     }
 
     // TODO: insert your code here */
-    sh->fSt.playersFree++; 
+    sh->fSt.playersFree++;
     sh->fSt.playersArrived++;
 
     if (sh->fSt.playersArrived <= 2 * NUMTEAMPLAYERS)
-    { //2*NUMTEAMPLAYERS : 2*4 -> 2 EQUIPAS DE 4 (MAIS O GUARDA-REDES)
-        if (sh->fSt.playersFree >= NUMTEAMPLAYERS && sh->fSt.goaliesFree >= NUMTEAMGOALIES)
+    {
+        if (sh->fSt.playersFree < NUMTEAMPLAYERS || sh->fSt.goaliesFree < NUMTEAMGOALIES)
         {
+            sh->fSt.st.playerStat[id] = WAITING_TEAM;
+            saveState(nFic, &sh->fSt);
+        }
+        else
+        { /* playersFree >= 4 && goaliesFree >= 1 -> able to constitute team */
             sh->fSt.st.playerStat[id] = FORMING_TEAM;
-            sh->fSt.playersFree--; //!nao sabemos se deve ser goalies-- ou nao meter nada
+            sh->fSt.playersFree--;
 
-            for (int i = 0; i < NUMTEAMPLAYERS; i++)
-            {
+            for (int i = 0; i < NUMTEAMPLAYERS - 1; i++)
+            { /* we need 3 other players to join this team */
                 if (semUp(semgid, sh->playersWaitTeam) == -1)
                 {
-                    perror("error on the up operation for semaphore access (GL)");
+                    perror("error on the down operation for semaphore access (PL)");
                     exit(EXIT_FAILURE);
                 }
 
                 if (semDown(semgid, sh->playerRegistered) == -1)
                 {
-                    perror("error on the up operation for semaphore access (GL)");
+                    perror("error on the up operation for semaphore access (PL)");
                     exit(EXIT_FAILURE);
                 }
 
                 sh->fSt.playersFree--;
             }
-            //sh->fSt.playersFree = sh->fSt.playersFree - NUMTEAMPLAYERS - 1;
 
+            /* we also need a goalie */
             if (semUp(semgid, sh->goaliesWaitTeam) == -1)
             {
-                perror("error on the down operation for semaphore access (GL)");
+                perror("error on the down operation for semaphore access (PL)");
                 exit(EXIT_FAILURE);
             }
 
-            if (semUp(semgid, sh->playerRegistered) == -1)
+            if (semDown(semgid, sh->playerRegistered) == -1)
             {
-                perror("error on the up operation for semaphore access (GL)");
+                perror("error on the up operation for semaphore access (PL)");
                 exit(EXIT_FAILURE);
             }
 
             sh->fSt.goaliesFree--;
             ret = sh->fSt.teamId++;
-            saveState(nFic, &sh->fSt);
-        }
-        else if (sh->fSt.playersFree < NUMTEAMPLAYERS || sh->fSt.goaliesFree < NUMTEAMGOALIES)
-        {
-            sh->fSt.st.playerStat[id] = WAITING_TEAM;
+
             saveState(nFic, &sh->fSt);
         }
     }
     else
-    {
-        //! NAO SABEMOS SE ALTERA TER RET=0
+    { /* the player is late, he's not playing */
         ret = 0;
-        sh->fSt.st.goalieStat[id] = LATE;
+        sh->fSt.st.playerStat[id] = LATE;
         saveState(nFic, &sh->fSt);
     }
 

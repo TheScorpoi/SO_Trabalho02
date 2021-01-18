@@ -220,6 +220,7 @@ static int goalieConstituteTeam(int id)
                 }
             }
 
+            sh->fSt.playersFree = sh->fSt.playersFree - 4;
             ret = sh->fSt.teamId++;
             saveState(nFic, &sh->fSt);
         }
