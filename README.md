@@ -1,41 +1,31 @@
 # SO_Trabalho02
-Trabalho Prático 01 - SO
+Trabalho Prático 02 - SO
 
 ###  Início
 Bem-vIndo ao README.md, aqui é possível ver todas as instruções para executar e entender o projeto realizado.
 
-## Estatísticas de Processamento em Bash
-Este script permite a visualização da quantidade de memória total e da memória residente em memória física, do número total de bytes I/O,e da e taxa de leitura/escrita (bytes/sec) dos processos seleccionados nos últimos sec segundos.
+## Simulação de hoje de futebol
+ 
+ .........
+ .........
 
 ### Pré-requesitos 
-Para executar o *script procstat.sh* precisa de um terminal bash, pode ser numa máquina com uma distribuição Ubuntu, ou numa virtual box.
-Antes de executar o *script*, terá de lhe atribuir permissões, para isso terá de executar o seguinte código na pasta onde se encontra o *procstat.sh* :
+Para compilar o programa é necessário à partida ter um compilador de C instalado na máquina, por exemplo o gcc.
 
+### Compilação e Execução
+Posto isto, para compilar basta executar, o seguinte comando, entando na pasta /semaphore_soccergame/src/ 
 ```
-chmod u+x procstat.sh
+make all
 ```
 
-### Opções para executar o script
-
-Para executar o *script prochstat.sh* há estas opções disponíveis:
-
-    -c          : Seleção de processos a utilizar atravez de uma expressão regular
-    -u          : Seleção de processos a visualizar através do nome do utilizador
-    -r          : Ordenação reversa
-    -s          : Seleção de processos a visualizar num periodo temporal - data mínima
-    -e          : Seleção de processos a visualizar num periodo temporal - data máxima
-    -d          : Ordenação da tabela por RATER (decrescente)
-    -m          : Ordenação da tabela por MEM (decrescente)
-    -t          : Ordenação da tabela por RSS (decrescente)
-    -w          : Ordenação da tabela pOR RATEW (decrescente)
-    -p          : Número de processos a visualizar
-
-Seguem-se alguns exemplos de execução:
-
+De seguida, temos de entrar na pasta /semaphore_soccergame/run/, para que possamos “simular o jogo de futebol”, então fazemos:
 ```
-./procstat.sh -m -r 10
-./procstat.sh -s "Nov 29 13:10" -e "Nov 19 16:30" 10
-./procstat.sh -t -c "sys.*" 10
+./probSemSharedMemSoccerGame
+```
+Para averiguar se havia a existência de algum dead lock, executamos o código *run.sh*, que nos permite executar um determinado número de vezes o ./probSemSharedMemSoccerGame, para isso temos de dar permissoões ao *run.sh* e posteriormente executá-lo.
+```
+chmod u+x run.sh
+./run.sh
 ```
 
 ### Relatório
