@@ -71,4 +71,7 @@ playersWaitEnd     |                |              |   1    |               |   
 refereeWaitTeams   |  waitForTeams  |              |   2    |               |             |   2    
 playersRegistered  |  PLAYING_1 E 2 |              |   5    |               |             |   5      
 
+PARA VER QD HA UM DEADLOCK ONDE É Q É :
 
+sudo gdb referee PID
+bt --> mostra a stack

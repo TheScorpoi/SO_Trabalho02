@@ -231,7 +231,7 @@ static int goalieConstituteTeam(int id) {
             exit(EXIT_FAILURE);
         }
 
-        ret = sh->fSt.teamId++;
+        ret = sh->fSt.teamId;
 
         if (semUp(semgid, sh->playerRegistered) == -1) {
             perror("error on the up operation for semaphore access (GL)");

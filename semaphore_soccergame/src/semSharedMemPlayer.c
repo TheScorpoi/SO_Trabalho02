@@ -228,6 +228,7 @@ static int playerConstituteTeam(int id) {
         exit(EXIT_FAILURE);
     }
 
+    
     // TODO: insert your code here 
     if (sh->fSt.st.playerStat[id] == FORMING_TEAM) {
         if (semUp(semgid, sh->refereeWaitTeams) == -1) {
@@ -273,6 +274,9 @@ static void waitReferee(int id, int team) {
         sh->fSt.st.playerStat[id] = WAITING_START_1;
     } else if (team == 2) {
         sh->fSt.st.playerStat[id] = WAITING_START_2;
+    
+    } else {
+        sh->fSt.st.playerStat[id] = 20;
     }
     saveState(nFic, &sh->fSt);
 

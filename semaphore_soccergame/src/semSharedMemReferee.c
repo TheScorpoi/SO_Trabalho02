@@ -175,9 +175,6 @@ static void waitForTeams() {
     }
 
     // TODO: insert your code here
-    // usar semaforo refereeWaitTeams
-    // Ta ca um 2 mas devia de tar o Nº de Teams
-
     for (int i = 0; i < 2; i++) {
         if (semDown(semgid, sh->refereeWaitTeams) == -1) {
             perror("error on the up operation for semaphore access ()");
