@@ -275,8 +275,6 @@ static void waitReferee(int id, int team) {
     } else if (team == 2) {
         sh->fSt.st.playerStat[id] = WAITING_START_2;
     
-    } else {
-        sh->fSt.st.playerStat[id] = 20;
     }
     saveState(nFic, &sh->fSt);
 
