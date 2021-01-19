@@ -311,7 +311,7 @@ static void waitReferee(int id, int team)
     // TODO: insert your code here
     if (semDown(semgid, sh->playersWaitReferee) == -1)
     {
-        perror("error on the up operation for semaphore access(PL)");
+        perror("error on the up operation for semaphore access(GL)");
         exit(EXIT_FAILURE);
     }
 }
@@ -353,7 +353,7 @@ static void playUntilEnd(int id, int team)
     // TODO: insert your code here
     if (semDown(semgid, sh->playersWaitEnd) == -1)
     {
-        perror("error on the up operation for semaphore access (PL)");
+        perror("error on the up operation for semaphore access (GL)");
         exit(EXIT_FAILURE);
     }
 }
