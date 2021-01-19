@@ -190,10 +190,10 @@ static int goalieConstituteTeam(int id)
         exit(EXIT_FAILURE);
     }
 
+    // TODO: insert your code here 
     sh->fSt.goaliesFree++;
     sh->fSt.goaliesArrived++;
 
-    /* TODO: insert your code here */
     if (sh->fSt.goaliesArrived <= 2 * NUMTEAMGOALIES)
     {
         if (sh->fSt.playersFree >= 4 && sh->fSt.goaliesFree >= NUMTEAMGOALIES)
