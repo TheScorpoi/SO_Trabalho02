@@ -5,9 +5,8 @@ Trabalho Prático 02 - SO
 Bem-vIndo ao README.md, aqui é possível ver todas as instruções para executar e entender o projeto realizado.
 
 ## Simulação de hoje de futebol
- 
- .........
- .........
+A simulação do jogo de futebol é representada com 3 envolventes, *player*, *goalie*, *referee*, todos como processos independentes,
+sendo que a sua sincronização e comunicação é realizada através de semáforos e de memória partilhada.
 
 ### Pré-requesitos 
 Para compilar o programa é necessário à partida ter um compilador de C instalado na máquina, por exemplo o gcc.
